@@ -252,6 +252,7 @@ with cols[0]:
     if st.button("🧹 Clear chat", use_container_width=True, help="Remove all chat messages"):
         st.session_state["messages"] = []
         st.toast("Chat cleared")
+        st.rerun()
 with cols[1]:
     if st.button("♻️ Reset uploaded PDF", type="primary", use_container_width=True, help="Clear the current PDF and chat state"):
         st.session_state["pdf_uploaded"] = False
@@ -259,3 +260,4 @@ with cols[1]:
         st.session_state["pdf_status"] = None
         st.session_state["messages"] = []
         st.toast("PDF state reset")
+        st.rerun()
