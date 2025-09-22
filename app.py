@@ -213,9 +213,8 @@ with chat_container:
         # chat input
         question = st.chat_input("Ask something about the document...")
         if question:
-            # append user's message and display
+            # append user's message
             st.session_state["messages"].append({"role": "user", "content": question})
-            render_message({"role": "user", "content": question})
 
             # call backend /ask
             try:
@@ -224,24 +223,24 @@ with chat_container:
             except Exception as e:
                 err = f"Could not contact backend: {e}"
                 st.session_state["messages"].append({"role": "assistant", "content": err})
-                render_message({"role": "assistant", "content": err})
             else:
                 status_code = data.get("status", resp.status_code) if isinstance(data, dict) else resp.status_code
                 if resp.status_code == 200 and status_code == 200:
                     answer = data.get("results", {}).get("answer", "No answer.")
                     st.session_state["messages"].append({"role": "assistant", "content": answer})
-                    render_message({"role": "assistant", "content": answer})
                 else:
                     # get detail message
                     results = data.get("results", {}) if isinstance(data, dict) else {}
-                    detail = results.get("detail", ["Unknown error"])
+                    detail = results.get("detail", ["Unknown error"]) 
                     if isinstance(detail, list):
                         detail_text = detail[0]
                     else:
                         detail_text = str(detail)
                     err_text = f"Error {status_code}: {detail_text}"
                     st.session_state["messages"].append({"role": "assistant", "content": err_text})
-                    render_message({"role": "assistant", "content": err_text})
+
+            # re-render so chat history appears above the input consistently
+            st.rerun()
 
 # ---------- Footer controls ----------
 st.markdown("---")
