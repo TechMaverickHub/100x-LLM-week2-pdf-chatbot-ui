@@ -22,6 +22,22 @@ st.markdown(
         padding-left: 2rem;
     }
 
+    /* sidebar spacing */
+    [data-testid="stSidebar"] .block-container{
+        padding-top: 1rem;
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+
+    /* sidebar card */
+    .sidebar-card {
+        padding: 12px;
+        border-radius: 10px;
+        background: #f8fafc;
+        border: 1px solid rgba(2,6,23,0.06);
+        margin-bottom: 12px;
+    }
+
     /* chat bubble base */
     .chat-bubble {
         padding: 12px 14px;
@@ -112,11 +128,14 @@ with right_col:
 
 # ---------- Sidebar: Upload / Info ----------
 with st.sidebar:
+    st.markdown("<div class='sidebar-card'>", unsafe_allow_html=True)
     st.header("Document")
     uploaded_file = st.file_uploader("Upload PDF (only PDF)", type=["pdf"])
+    upload_clicked = st.button("⬆️ Upload PDF", use_container_width=True, disabled=(uploaded_file is None))
+    st.markdown("</div>", unsafe_allow_html=True)
 
-    if uploaded_file is not None:
-        if st.button("Upload PDF"):
+    if upload_clicked and uploaded_file is not None:
+        with st.spinner("Uploading and processing document..."):
             # send file to backend
             files = {"file": (uploaded_file.name, uploaded_file, "application/pdf")}
             try:
@@ -127,43 +146,43 @@ with st.sidebar:
                 data = None
                 resp = None
 
-            if resp is None:
-                st.session_state["pdf_uploaded"] = False
-                st.session_state["pdf_name"] = None
-                st.session_state["pdf_status"] = None
+        if resp is None:
+            st.session_state["pdf_uploaded"] = False
+            st.session_state["pdf_name"] = None
+            st.session_state["pdf_status"] = None
+        else:
+            status_code = data.get("status", resp.status_code) if isinstance(data, dict) else resp.status_code
+            if resp.status_code == 200 and status_code == 200:
+                st.success(data.get("message", "PDF processed successfully."))
+                st.session_state["pdf_uploaded"] = True
+                st.session_state["pdf_name"] = uploaded_file.name
+                st.session_state["pdf_status"] = data.get("results", {}).get("status", "processed")
+                # reset chat for fresh doc
+                st.session_state["messages"] = []
             else:
-                status_code = data.get("status", resp.status_code) if isinstance(data, dict) else resp.status_code
-                if resp.status_code == 200 and status_code == 200:
-                    st.success(data.get("message", "PDF processed successfully."))
-                    st.session_state["pdf_uploaded"] = True
-                    st.session_state["pdf_name"] = uploaded_file.name
-                    st.session_state["pdf_status"] = data.get("results", {}).get("status", "processed")
-                    # reset chat for fresh doc
-                    st.session_state["messages"] = []
-                else:
-                    # extract details robustly
-                    details = []
-                    if isinstance(data, dict):
-                        results = data.get("results", {})
-                        # the API returns results.detail as a list per your example
-                        d = results.get("detail")
-                        if isinstance(d, list):
-                            details = d
-                        elif isinstance(d, str):
-                            details = [d]
-                        else:
-                            details = ["Unknown error"]
+                # extract details robustly
+                details = []
+                if isinstance(data, dict):
+                    results = data.get("results", {})
+                    # the API returns results.detail as a list per your example
+                    d = results.get("detail")
+                    if isinstance(d, list):
+                        details = d
+                    elif isinstance(d, str):
+                        details = [d]
                     else:
                         details = ["Unknown error"]
+                else:
+                    details = ["Unknown error"]
 
-                    # show pop-up style error in sidebar and add to chat as assistant message
-                    err_text = f"Error {status_code}: {details[0]}"
-                    st.error(err_text)
-                    st.session_state["pdf_uploaded"] = False
-                    st.session_state["pdf_name"] = uploaded_file.name
-                    st.session_state["pdf_status"] = f"error ({status_code})"
-                    # also append to chat history as assistant error bubble
-                    st.session_state["messages"].append({"role": "assistant", "content": err_text})
+                # show pop-up style error in sidebar and add to chat as assistant message
+                err_text = f"Error {status_code}: {details[0]}"
+                st.error(err_text)
+                st.session_state["pdf_uploaded"] = False
+                st.session_state["pdf_name"] = uploaded_file.name
+                st.session_state["pdf_status"] = f"error ({status_code})"
+                # also append to chat history as assistant error bubble
+                st.session_state["messages"].append({"role": "assistant", "content": err_text})
 
     # show file info
     if st.session_state["pdf_name"]:
