@@ -40,6 +40,14 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
+Set Environment Variables
+
+Create a `.env` file in the root directory with the following content:
+
+```env
+BASE_API=http://127.0.0.1:8000
+```
+
 ------------------------------------------------------------------------
 
 ## ▶️ Running the App
