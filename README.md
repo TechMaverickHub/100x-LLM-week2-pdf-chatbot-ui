@@ -22,7 +22,7 @@ document.
 Clone the repository:
 
 ``` bash
-git clone https://github.com/your-username/100x-LLM-week2-pdf-chatbot-frontend.git
+git clone https://github.com/TechMaverickHub/100x-LLM-week2-pdf-chatbot-ui.git
 cd 100x-LLM-week2-pdf-chatbot-frontend
 ```
 
@@ -105,6 +105,13 @@ Both endpoints return: - `message` → success/error message\
 
 
 ------------------------------------------------------------------------
+
+## 🔗 Backend Repository
+
+You can clone the backend from:  
+[100x-LLM-week2-pdf-chatbot](https://github.com/TechMaverickHub/100x-LLM-week2-pdf-chatbot.git)
+
+
 
 ## 🤝 Contributing
 
