@@ -9,7 +9,7 @@ load_dotenv()
 
 API_BASE = os.getenv("BASE_API")
 
-st.set_page_config(page_title="PDF Chatbot (UI)", page_icon="🤖", layout="wide")
+st.set_page_config(page_title="Feature PDF Chatbot (UI)", page_icon="🤖", layout="wide")
 
 # ---------- Styling ----------
 st.markdown(
@@ -120,9 +120,13 @@ left_col, main_col, right_col = st.columns([1, 6, 1])
 with left_col:
     st.write("")  # spacer
 with main_col:
-    st.title("📄 PDF Chatbot — Streamlit UI")
-    st.write("Upload a PDF, then chat with the document. Bot replies appear on the left; your messages are on the right.")
-
+    st.title("🤖 Chat with Your Feature Docs")
+    st.write(
+        "Turn your feature documents into an interactive chat! 📝💬\n\n"
+        "Ask questions and get answers directly from the PDF. \n\n" 
+        "Chatbot replies appear on the left, while your messages show on the right. "
+        "No more repeated feature explanations to clients—just upload and interact!"
+    )
 with right_col:
     st.write("")
 
