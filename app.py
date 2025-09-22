@@ -27,7 +27,7 @@ st.markdown(
         padding: 12px 14px;
         border-radius: 14px;
         display: inline-block;
-        max-width: 74%;
+        max-width: 100%;
         line-height: 1.4;
         font-size: 14px;
         box-shadow: 0 1px 2px rgba(0,0,0,0.05);
@@ -67,8 +67,8 @@ st.markdown(
     .user-avatar { background: #0284c7; color: white; }
 
     /* align helper */
-    .left-col { display: flex; align-items: flex-start; gap: 8px; }
-    .right-col { display: flex; justify-content: flex-end; align-items: flex-start; gap: 8px; }
+    .left-col { display: flex; align-items: flex-start; gap: 8px; margin: 10px 0 16px 0; }
+    .right-col { display: flex; justify-content: flex-end; align-items: flex-start; gap: 8px; margin: 10px 0 16px 0; }
 
     /* smaller metadata text */
     .meta { font-size: 12px; color: #6b7280; margin-top: 6px; }
@@ -81,6 +81,9 @@ st.markdown(
         border: 1px dashed rgba(15,23,42,0.06);
         font-size: 13px;
     }
+
+    /* add breathing room above chat input */
+    [data-testid="stChatInput"] { margin-top: 18px; }
     </style>
     """,
     unsafe_allow_html=True,
@@ -181,7 +184,7 @@ def render_message(msg: Dict):
     role = msg.get("role")
     text = msg.get("content", "")
     if role == "assistant":
-        cols = st.columns([0.2, 0.8])
+        cols = st.columns([0.8, 0.2])
         with cols[0]:
             # left column: avatar + bubble
             avatar_html = "<div class='avatar bot-avatar'>B</div>"
@@ -191,7 +194,7 @@ def render_message(msg: Dict):
         with cols[1]:
             st.write("")
     else:  # user
-        cols = st.columns([0.8, 0.2])
+        cols = st.columns([0.2, 0.8])
         with cols[0]:
             st.write("")
         with cols[1]:
