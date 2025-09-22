@@ -173,7 +173,7 @@ with st.sidebar:
         st.info("No PDF uploaded yet.")
 
     st.markdown("---")
-    st.markdown("Run backend at `http://127.0.0.1:8000`")
+    st.markdown(f"Run backend at {API_BASE}")
     st.markdown("Run frontend with:\n```\nstreamlit run app.py --server.port 8001\n```")
 
 # ---------- Helper: render message ----------
