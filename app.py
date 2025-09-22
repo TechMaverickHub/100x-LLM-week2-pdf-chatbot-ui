@@ -249,13 +249,11 @@ cols = st.columns([1, 1, 1])
 with cols[0]:
     if st.button("Clear chat"):
         st.session_state["messages"] = []
-        st.experimental_rerun()
 with cols[1]:
     if st.button("Reset uploaded PDF"):
         st.session_state["pdf_uploaded"] = False
         st.session_state["pdf_name"] = None
         st.session_state["pdf_status"] = None
         st.session_state["messages"] = []
-        st.experimental_rerun()
 with cols[2]:
     st.write("")  # reserved
