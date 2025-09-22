@@ -106,6 +106,13 @@ Both endpoints return: - `message` → success/error message\
 
 ------------------------------------------------------------------------
 
+## 🔗 Backend Repository
+
+You can clone the backend from:  
+[100x-LLM-week2-pdf-chatbot](https://github.com/TechMaverickHub/100x-LLM-week2-pdf-chatbot.git)
+
+
+
 ## 🤝 Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
