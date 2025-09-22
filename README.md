@@ -40,6 +40,14 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
+Set Environment Variables
+
+Create a `.env` file in the root directory with the following content:
+
+```env
+BASE_API=http://127.0.0.1:8000
+```
+
 ------------------------------------------------------------------------
 
 ## ▶️ Running the App
@@ -86,7 +94,15 @@ Both endpoints return: - `message` → success/error message\
 
 ## 📸 Screenshots (optional)
 
-*Add screenshots of PDF upload and chat interface here*
+### Home 
+![Home Screen](screenshots/screenshot1.png)
+
+### Chat UI
+![Chat Screen](screenshots/screenshot2.png)
+
+### Chat UI
+![Chat Screen](screenshots/screenshot3.png)
+
 
 ------------------------------------------------------------------------
 
