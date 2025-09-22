@@ -206,7 +206,7 @@ def render_message(msg: Dict):
         cols = st.columns([0.8, 0.2])
         with cols[0]:
             # left column: avatar + bubble
-            avatar_html = "<div class='avatar bot-avatar'>B</div>"
+            avatar_html = "<div class='avatar bot-avatar'>🤖</div>"
             bubble_html = f"<div class='chat-bubble bot'>{text}</div>"
             st.markdown(f"<div class='left-col'>{avatar_html}{bubble_html}</div>", unsafe_allow_html=True)
         # right empty
@@ -217,7 +217,7 @@ def render_message(msg: Dict):
         with cols[0]:
             st.write("")
         with cols[1]:
-            avatar_html = "<div class='avatar user-avatar'>You</div>"
+            avatar_html = "<div class='avatar user-avatar'>👤</div>"
             bubble_html = f"<div class='chat-bubble user'>{text}</div>"
             st.markdown(f"<div class='right-col'>{bubble_html}{avatar_html}</div>", unsafe_allow_html=True)
 
